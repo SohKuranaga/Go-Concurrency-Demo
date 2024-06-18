@@ -18,10 +18,10 @@ type IndexedChecksum struct {
 
 // computeChecksum は、指定された行に対してSHA-256チェックサムを計算し、結果をチャネルに送信します。
 func computeChecksum(line string, index int, wg *sync.WaitGroup, out chan<- IndexedChecksum) {
-	defer wg.Done()                                          // 作業完了時にWaitGroupのカウンターをデクリメント
-	hash := sha256.Sum256([]byte(line))                      // SHA-256ハッシュを計算
-	checksum := hex.EncodeToString(hash[:])                  // ハッシュ値をHEXダンプに変換
-	out <- IndexedChecksum{Index: index, Checksum: checksum} // 結果をチャネルに送信
+	defer wg.Done()
+	hash := sha256.Sum256([]byte(line))     // SHA-256ハッシュを計算
+	checksum := hex.EncodeToString(hash[:]) // ハッシュ値をHEXダンプに変換
+	out <- IndexedChecksum{Index: index, Checksum: checksum}
 }
 
 func main() {
@@ -53,7 +53,7 @@ func main() {
 		return
 	}
 
-	// 全てのゴルーチンが完了するのを待つゴルーチン
+	// checksumChanから値を取り出す際にDeadlockを回避するためにするために作成。
 	go func() {
 		wg.Wait()           // すべてのゴルーチンが完了するのを待つ
 		close(checksumChan) // チャネルをクローズ
