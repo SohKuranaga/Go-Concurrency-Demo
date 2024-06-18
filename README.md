@@ -13,7 +13,7 @@ go run main.go <ハッシュ化したいファイル名>
 ```bash
 go run main.go sample.txt
 ```
-「test.txt」というファイルを用意してあります。よろしければご利用ください。
+「sample.txt」というファイルを用意してあります。よろしければご利用ください。
 
 ### 出力結果イメージ
 ![Result-Image](https://github.com/SohKuranaga/cybozu-intern-kubernetes-deliverables/assets/154317685/58382399-0580-4d79-ba6f-a167d0e74294)
